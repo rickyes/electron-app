@@ -1,5 +1,5 @@
 {
-  "name": "nyis-app",
+  "name": "electron-app",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
@@ -7,5 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "electron-settings": "^3.1.1",
+    "electron-shortcut-normalizer": "^1.0.0",
+    "highlight.js": "^9.12.0"
+  }
 }
