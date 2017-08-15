@@ -1,0 +1,32 @@
+<template class="task-template">
+  <section id="camera-section" class="section js-section u-category-zfy">
+    <header class="section-header">
+      <div class="section-wrapper">
+        <h1>
+          <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-menu"></use></svg>
+          硬件列表
+        </h1>
+      </div>
+    </header>
+    <div class="demo">
+      <div class="demo-wrapper">
+        <button id="shortcuts-demo-toggle" class="js-container-target demo-toggle-button">摄像头
+          <div class="demo-meta u-avoid-clicks">Supports: Win, macOS, Linux <span class="demo-meta-divider">|</span> Process: Main</div>
+        </button>
+        <div class="demo-box">
+          <div class="booth">
+            <video id="video" width="500" height="300"></video>
+            <button class="demo-button" id='tack' style="width:200px;"> 拍照</button>&nbsp;
+            <button class="demo-button" type="button" name="button" id="btn-submit" style="width:200px;float:right;overflow:hidden;margin-right:0px;">上传到服务器</button>
+            <canvas id='canvas' width='500' height='300'></canvas>
+            <img id='img' src=''>
+         </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      require('./renderer-process/zfy/camera')
+    </script>
+  </section>
+</template>
