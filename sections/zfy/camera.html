@@ -4,23 +4,46 @@
       <div class="section-wrapper">
         <h1>
           <svg class="section-icon"><use xlink:href="assets/img/icons.svg#icon-menu"></use></svg>
-          硬件列表
+          体检人员登记
         </h1>
       </div>
     </header>
     <div class="demo">
+      <div class="demo-wrapper is-open">
+        <button id="idcard-demo-toggle" class="js-container-target demo-toggle-button">身份证识别
+          <div class="demo-meta u-avoid-clicks">调用身份证扫描仪 <span class="demo-meta-divider">|</span> IDCard</div>
+        </button>
+        <div class="demo-box">
+          <input class="demo-input" id="input-idcard" placeholder="输入身份证号." style="border-color:black;"></input>
+          <button class="demo-button" id='btn-idcard' style="margin-left:15px;"> 确定</button>
+        </div>
+      </div>
+    </div>
+    <div class="demo">
       <div class="demo-wrapper">
-        <button id="shortcuts-demo-toggle" class="js-container-target demo-toggle-button">摄像头
+        <button id="name-demo-toggle" class="js-container-target demo-toggle-button">姓名
+          <div class="demo-meta u-avoid-clicks">体检人员姓名 <span class="demo-meta-divider">|</span> name</div>
+        </button>
+        <div class="demo-box">
+          <input class="demo-input" id="input-name" placeholder="输入姓名." style="border-color:black;"></input>
+          <button class="demo-button" id='btn-name' style="margin-left:15px;"> 确定</button>
+        </div>
+      </div>
+    </div>
+    <div class="demo">
+      <div class="demo-wrapper">
+        <button id="camera-demo-toggle" class="js-container-target demo-toggle-button">摄像头
           <div class="demo-meta u-avoid-clicks">Supports: Win, macOS, Linux <span class="demo-meta-divider">|</span> Process: Main</div>
         </button>
         <div class="demo-box">
           <div class="booth">
             <video id="video" width="500" height="300"></video>
-            <button class="demo-button" id='tack' style="width:200px;"> 拍照</button>&nbsp;
-            <button class="demo-button" type="button" name="button" id="btn-submit" style="width:200px;float:right;overflow:hidden;margin-right:0px;">上传到服务器</button>
+            <button class="demo-button" id='tack' style="width:100%;"> 拍照</button>&nbsp;
+            <!-- <button class="demo-button" type="button" name="button" id="btn-submit" style="width:200px;float:right;overflow:hidden;margin-right:0px;">上传到服务器</button> -->
             <canvas id='canvas' width='500' height='300'></canvas>
             <img id='img' src=''>
          </div>
+         <button class="demo-button" type="button" name="button" id="btn-submit" style="width:100%;">上传体检人员资料</button>
         </div>
       </div>
     </div>

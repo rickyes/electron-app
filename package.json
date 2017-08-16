@@ -5,14 +5,34 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-	"start": "electron .",
-	"packager": "electron-packager ./ electron-app --all --out ./OutApp --version 1.4.0 --overwrite --icon=./icon.ico"
+    "start": "electron .",
+    "packager": "electron-packager ./ electron-app --all --out ./OutApp --version 1.4.0 --overwrite --icon=./icon.ico"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "base64-img": "^1.0.3",
     "electron-settings": "^3.1.1",
     "electron-shortcut-normalizer": "^1.0.0",
-    "highlight.js": "^9.12.0"
+    "highlight.js": "^9.12.0",
+    "lowdb": "^0.16.2",
+    "request": "^2.81.0"
+  },
+  "build": {
+    "appId": "com.nyis.electron-app",
+    "copyright": "NYIS",
+    "productName": "electron-app",
+    "dmg": {
+      "background": "./res/background.png",
+      "window": {
+        "x": 100,
+        "y": 100,
+        "width": 500,
+        "height": 300
+      }
+    },
+    "win": {
+      "icon": "./res/icon.ico"
+    }
   }
 }
