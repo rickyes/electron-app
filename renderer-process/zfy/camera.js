@@ -46,16 +46,18 @@ const video = document.getElementById('video'),
       request.post({
         url:'http://192.168.1.113:3000/medical',
         form:{
-          img: 'img',
-          user_code: 'zhoumq',
-          file: img.src
+          idcard: document.getElementById('input-idcard').value,
+          name: document.getElementById('input-name').value,
+          img: img.src
         }},function(err,res,body){
           if(err){
             notification.body = '请检查网络连接'
+            alert(notification.body);
             const myNotification = new window.Notification(notification.title, notification)
           }else{
             body = JSON.parse(body);
             notification.body = body.result;
+            alert(notification.body);
             const myNotification2 = new window.Notification(notification.title, notification)
             if(body.code==401){
 
