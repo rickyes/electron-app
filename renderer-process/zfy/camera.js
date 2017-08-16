@@ -8,6 +8,8 @@ const video = document.getElementById('video'),
         db = low('db.json'),
         btn_name = document.getElementById('btn-name'),
         base64Img = require('base64-img'),
+        request = require('request'),
+        fs = require('fs'),
         vendorUrl = window.URL || window.webkitURL;
         db.defaults({ zfy:{} }).write();
 
@@ -34,15 +36,40 @@ const video = document.getElementById('video'),
 
         //把canvas图像转为img图片
         img.src = canvas.toDataURL("image/png");
-
-        img.onload =function() {
-          var data = base64Img.base64Sync(img.src);
-          console.log(data);
-        }
     });
 
     btn_submit.addEventListener('click',()=>{
-      alert('Hello Electron!');
+      const notification = {
+        title: '数据上传',
+        body: ''
+      }
+      request.post({
+        url:'http://192.168.1.113:3000/medical',
+        form:{
+          img: 'img',
+          user_code: 'zhoumq',
+          file: img.src
+        }},function(err,res,body){
+          if(err){
+            notification.body = '请检查网络连接'
+            const myNotification = new window.Notification(notification.title, notification)
+          }else{
+            body = JSON.parse(body);
+            notification.body = body.result;
+            const myNotification2 = new window.Notification(notification.title, notification)
+            if(body.code==401){
+
+            }else if(body.code==200){
+              document.getElementById('input-idcard').value = '';
+              document.getElementById('input-name').value = '';
+              img.src = '';
+              canvas.height = canvas.height;
+              let parent = document.getElementById('idcard-demo-toggle').parentElement;
+              document.getElementById('camera-demo-toggle').parentElement.classList.toggle('is-open');
+              parent.classList.toggle('is-open');
+            }
+          }
+        });
     });
 
     btn_idcard.addEventListener('click',()=>{
@@ -50,7 +77,7 @@ const video = document.getElementById('video'),
         let value = input_idcard.value;
         try{
           db.get('zfy')
-            .set('zfy.idcard',value)
+            .set('idcard',value)
             .write();
             alert('添加体检人员身份证成功');
             let parent = document.getElementById('name-demo-toggle').parentElement;
@@ -69,7 +96,7 @@ const video = document.getElementById('video'),
       let value = input_name.value;
       try{
         db.get('zfy')
-          .set('zfy.name',value)
+          .set('name',value)
           .write();
           alert('添加体检人员姓名成功');
           let parent = document.getElementById('camera-demo-toggle').parentElement;
