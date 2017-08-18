@@ -43,8 +43,9 @@ const video = document.getElementById('video'),
         title: '数据上传',
         body: ''
       }
+      let url = require('../../config.js').url+'/medical';
       request.post({
-        url:'http://192.168.1.113:3000/medical',
+        url: url,
         form:{
           idcard: document.getElementById('input-idcard').value,
           name: document.getElementById('input-name').value,
