@@ -11,26 +11,10 @@ const screenshot = document.getElementById('screen-shot')
 const screenshotMsg = document.getElementById('screenshot-path')
 
 screenshot.addEventListener('click', function (event) {
-  screenshotMsg.textContent = 'Gathering screens...'
-  const thumbSize = determineScreenShotSize()
-  let options = { types: ['screen'], thumbnailSize: thumbSize }
-
-  desktopCapturer.getSources(options, function (error, sources) {
-    if (error) return console.log(error)
-
-    sources.forEach(function (source) {
-      if (source.name === 'Entire screen' || source.name === 'Screen 1') {
-        const screenshotPath = path.join(os.tmpdir(), 'screenshot.png')
-
-        fs.writeFile(screenshotPath, source.thumbnail.toPng(), function (error) {
-          if (error) return console.log(error)
-          shell.openExternal('file://' + screenshotPath)
-          const message = `Saved screenshot to: ${screenshotPath}`
-          screenshotMsg.textContent = message
-        })
-      }
-    })
-  })
+  var bodyHTML = window.document.body.innerHTML
+  window.document.body.innerHTML = document.getElementById('pre-print').innerHTML
+  window.print()
+  window.document.body.innerHTML = bodyHTML
 })
 
 function determineScreenShotSize () {
