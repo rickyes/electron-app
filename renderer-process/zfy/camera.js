@@ -10,8 +10,17 @@ const video = document.getElementById('video'),
         base64Img = require('base64-img'),
         request = require('request'),
         fs = require('fs'),
+        btn_open_idcard = document.getElementById('btn-open-idcard'),
         vendorUrl = window.URL || window.webkitURL;
         db.defaults({ zfy:{} }).write();
+        const ffi = require('ffi');
+        const test = ffi.Library('Termb.dll',{
+          'CVR_InitComm': ['int',['int']],
+          'CVR_Authenticate': ['int',[]],
+          'CVR_Read_Content': ['int',['int']],
+          'CVR_CloseComm': ['int',[]],
+          'CVR_GetState': ['int',[]]
+        });
 
       //媒体对象
       navigator.getMedia = navigator.getUserMedia ||
@@ -108,4 +117,25 @@ const video = document.getElementById('video'),
       }catch(err){
         alert('添加体检人员姓名出错');
       }
+    });
+
+    btn_open_idcard.addEventListener('click',()=>{
+      let con = test.CVR_InitComm(1001);
+      if(con!==1) return;
+      console.log('开启端口成功');
+      let con_state = test.CVR_GetState();
+      if(con_state!==144) return;
+      console.log('连接仪器成功');
+      let interval = setInterval(()=>{
+        // let card_auth = test.CVR_Authenticate();
+        // console.log(card_auth);
+        let read_content = test.CVR_Read_Content(4);
+        if(read_content!==1) return;
+        console.log('读卡成功，身份证信息为：\n');
+        fs.readFile('wz.txt','utf-8',(err,data)=>{
+          if(err) return;
+          console.log(data);
+        });
+      },300);
+      clearInterval(interval);
     });
