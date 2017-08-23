@@ -3,24 +3,38 @@ const video = document.getElementById('video'),
         snap = document.getElementById('tack'),
         img = document.getElementById('img'),
         btn_submit = document.getElementById('btn-submit'),
-        btn_idcard = document.getElementById('btn-idcard'),
+        // btn_idcard = document.getElementById('btn-idcard'),
         low = require('lowdb'),
         db = low('db.json'),
-        btn_name = document.getElementById('btn-name'),
+        // btn_name = document.getElementById('btn-name'),
         base64Img = require('base64-img'),
         request = require('request'),
         fs = require('fs'),
         btn_open_idcard = document.getElementById('btn-open-idcard'),
+        camera_result_div = document.getElementById('camera-result-div'),
+        btn_confirm_idcard = document.getElementById('btn-confirm-idcard'),
+        idcard_name = document.getElementById('idcard-name'),
+        idcard_sex = document.getElementById('idcard-sex'),
+        idcard_nationality = document.getElementById('idcard-nationality'),
+        idcard_year = document.getElementById('idcard-year'),
+        idcard_month = document.getElementById('idcard-month'),
+        idcard_day = document.getElementById('idcard-day'),
+        idcard_address = document.getElementById('idcard-address'),
+        idcard_img = document.getElementById('idcard-img'),
+        idcard_number = document.getElementById('idcard-number'),
+        idcard_time = document.getElementById('idcard-time'),
         vendorUrl = window.URL || window.webkitURL;
+
         db.defaults({ zfy:{} }).write();
-        const ffi = require('ffi');
-        const test = ffi.Library('Termb.dll',{
-          'CVR_InitComm': ['int',['int']],
-          'CVR_Authenticate': ['int',[]],
-          'CVR_Read_Content': ['int',['int']],
-          'CVR_CloseComm': ['int',[]],
-          'CVR_GetState': ['int',[]]
-        });
+        //通过ffi调用dll
+        // const ffi = require('ffi');
+        // const test = ffi.Library('Termb.dll',{
+        //   'CVR_InitComm': ['int',['int']],
+        //   'CVR_Authenticate': ['int',[]],
+        //   'CVR_Read_Content': ['int',['int']],
+        //   'CVR_CloseComm': ['int',[]],
+        //   'CVR_GetState': ['int',[]]
+        // });
 
       //媒体对象
       navigator.getMedia = navigator.getUserMedia ||
@@ -53,11 +67,17 @@ const video = document.getElementById('video'),
         body: ''
       }
       let url = require('../../config.js').url+'/medical';
+      let birthtime = idcard_year.innerText+' - '+idcard_month.innerText+' - '+idcard_day.innerText;
       request.post({
         url: url,
         form:{
-          idcard: document.getElementById('input-idcard').value,
-          name: document.getElementById('input-name').value,
+          idcard: idcard_number.innerText,
+          name: idcard_name.innerText,
+          sex: idcard_sex.innerText,
+          nationality: idcard_nationality.innerText,
+          birthtime: birthtime,
+          address: idcard_address.innerText,
+          idcardimg: idcard_img.src,
           img: img.src
         }},function(err,res,body){
           if(err){
@@ -72,8 +92,17 @@ const video = document.getElementById('video'),
             if(body.code==401){
 
             }else if(body.code==200){
-              document.getElementById('input-idcard').value = '';
-              document.getElementById('input-name').value = '';
+              idcard_name.innerText = '';
+              idcard_sex.innerText = '';
+              idcard_nationality.innerText = '';
+              idcard_year.innerText = '';
+              idcard_month.innerText = '';
+              idcard_day.innerText = '';
+              idcard_address.innerText = '';
+              idcard_img.src = '';
+              idcard_number.innerText = '';
+              idcard_time.innerText = '';
+              camera_result_div.style.display = 'none';
               img.src = '';
               canvas.height = canvas.height;
               let parent = document.getElementById('idcard-demo-toggle').parentElement;
@@ -84,58 +113,89 @@ const video = document.getElementById('video'),
         });
     });
 
-    btn_idcard.addEventListener('click',()=>{
-        let input_idcard = document.getElementById('input-idcard');
-        let value = input_idcard.value;
-        try{
-          db.get('zfy')
-            .set('idcard',value)
-            .write();
-            alert('添加体检人员身份证成功');
-            let parent = document.getElementById('name-demo-toggle').parentElement;
-            document.getElementById('idcard-demo-toggle').parentElement.classList.toggle('is-open');
-            parent.classList.toggle('is-open');
-        }catch(err){
-          alert('添加体检人员身份证出错');
-        }
-        // let v = db.get('zfy')
-        //   .find({idcard: value})
-        //   .value();
-    });
+    // btn_idcard.addEventListener('click',()=>{
+    //     let input_idcard = document.getElementById('input-idcard');
+    //     let value = input_idcard.value;
+    //     try{
+    //       db.get('zfy')
+    //         .set('idcard',value)
+    //         .write();
+    //         alert('添加体检人员身份证成功');
+    //         let parent = document.getElementById('name-demo-toggle').parentElement;
+    //         document.getElementById('idcard-demo-toggle').parentElement.classList.toggle('is-open');
+    //         parent.classList.toggle('is-open');
+    //     }catch(err){
+    //       alert('添加体检人员身份证出错');
+    //     }
+    // });
 
-    btn_name.addEventListener('click',()=>{
-      let input_name = document.getElementById('input-name');
-      let value = input_name.value;
-      try{
-        db.get('zfy')
-          .set('name',value)
-          .write();
-          alert('添加体检人员姓名成功');
-          let parent = document.getElementById('camera-demo-toggle').parentElement;
-          document.getElementById('name-demo-toggle').parentElement.classList.toggle('is-open');
-          parent.classList.toggle('is-open');
-      }catch(err){
-        alert('添加体检人员姓名出错');
-      }
-    });
+    // btn_name.addEventListener('click',()=>{
+    //   let input_name = document.getElementById('input-name');
+    //   let value = input_name.value;
+    //   try{
+    //     db.get('zfy')
+    //       .set('name',value)
+    //       .write();
+    //       alert('添加体检人员姓名成功');
+    //       let parent = document.getElementById('camera-demo-toggle').parentElement;
+    //       document.getElementById('name-demo-toggle').parentElement.classList.toggle('is-open');
+    //       parent.classList.toggle('is-open');
+    //   }catch(err){
+    //     alert('添加体检人员姓名出错');
+    //   }
+    // });
 
+    //接收扫描身份证结果
     btn_open_idcard.addEventListener('click',()=>{
-      let con = test.CVR_InitComm(1001);
-      if(con!==1) return;
-      console.log('开启端口成功');
-      let con_state = test.CVR_GetState();
-      if(con_state!==144) return;
-      console.log('连接仪器成功');
-      let interval = setInterval(()=>{
-        // let card_auth = test.CVR_Authenticate();
-        // console.log(card_auth);
-        let read_content = test.CVR_Read_Content(4);
-        if(read_content!==1) return;
-        console.log('读卡成功，身份证信息为：\n');
-        fs.readFile('wz.txt','utf-8',(err,data)=>{
-          if(err) return;
-          console.log(data);
-        });
-      },300);
-      clearInterval(interval);
+      let url = 'http://192.168.1.112:9097/idcard_reader/info';
+      request(url,(err,response,body)=>{
+        if(err)
+          alert('身份证扫描仪连接错误');
+        else{
+          body = JSON.parse(body);
+          if(body.result === 'ok'){
+            idcard_name.innerText = body.info[0];
+            idcard_sex.innerText = body.info[1];
+            idcard_nationality.innerText = body.info[2];
+            idcard_year.innerText = body.info[3].substr(0,4);
+            idcard_month.innerText = body.info[3].substr(4,2);
+            idcard_day.innerText = body.info[3].substr(6,2);
+            idcard_address.innerText = body.info[4];
+            idcard_img.src = body.info[10];
+            idcard_number.innerText = body.info[5];
+            idcard_time.innerText = body.info[9];
+            camera_result_div.style.display = 'inline';
+          }else{
+            alert(body.info);
+          }
+        }
+      });
+
+
+      //通过ffi调用dll
+      // let con = test.CVR_InitComm(1001);
+      // if(con!==1) return;
+      // console.log('开启端口成功');
+      // let con_state = test.CVR_GetState();
+      // if(con_state!==144) return;
+      // console.log('连接仪器成功');
+      // let interval = setInterval(()=>{
+      //   // let card_auth = test.CVR_Authenticate();
+      //   // console.log(card_auth);
+      //   let read_content = test.CVR_Read_Content(4);
+      //   if(read_content!==1) return;
+      //   console.log('读卡成功，身份证信息为：\n');
+      //   fs.readFile('wz.txt','utf-8',(err,data)=>{
+      //     if(err) return;
+      //     console.log(data);
+      //   });
+      // },300);
+      // clearInterval(interval);
+    });
+
+    //确认身份证信息
+    btn_confirm_idcard.addEventListener('click',()=>{
+      let parent = document.getElementById('camera-demo-toggle').parentElement;
+      document.getElementById('idcard-demo-toggle').parentElement.classList.toggle('is-open');
+      parent.classList.toggle('is-open');
     });

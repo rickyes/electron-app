@@ -1,6 +1,7 @@
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const url = require('url')
+const config = require('./config')
 
 // 保持一个对于 window 对象的全局引用，如果你不这样做，
 // 当 JavaScript 对象被垃圾回收， window 会被自动地关闭
@@ -10,8 +11,7 @@ app.setName('暖医科技')
 
 function createWindow () {
   var windowOptions = {
-      width: 1080,
-      minWidth: 680,
+      width: 1280,
       height: 840,
       title: app.getName()
   }
@@ -26,7 +26,7 @@ function createWindow () {
   }))
 
   // 打开开发者工具。
-  win.webContents.openDevTools()
+  if(config.debug) win.webContents.openDevTools()
 
   // 当 window 被关闭，这个事件会被触发。
   win.on('closed', () => {

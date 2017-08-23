@@ -16,12 +16,27 @@
         <div class="demo-box">
           <!-- <input class="demo-input" id="input-idcard" placeholder="输入身份证号." style="border-color:black;"></input>
           <button class="demo-button" id='btn-idcard' style="margin-left:15px;"> 确定</button> -->
-          <button class="demo-button" id='btn-open-idcard' style="margin-left:15px;"> 确认扫描</button>
-          <p>正在连接设备</p>
+          <button class="demo-button" id='btn-open-idcard' style="margin-left:15px;"> 扫描身份证</button>
+          <div id="camera-result-div" style="display: none;">
+            <h5 style="margin-left:15px;">扫描结果</h5>
+            <div style="width:100%;margin-bottom:20px;margin-left:20px;">
+              <div style="float: left;margin-left: 5px;">
+  				      <p style="color: blue;">姓名：<span style="color:black;font-weight:bold;" id="idcard-name">周明雀</span></p>
+  				      <p style="color: blue;">性别：<span style="color:black;font-weight:bold;" id="idcard-sex">男</span><span style="margin-left: 20px;">民族：<span style="color:black;font-weight:bold;" id="idcard-nationality">汉</span></span></p>
+  				      <p style="color: blue;">出生：<span style="color:black;font-weight:bold;" id="idcard-year">1995</span> 年 <span style="color:black;font-weight:bold;" id="idcard-month">11</span> 月 <span style="color:black;font-weight:bold;" id="idcard-day">25</span> 日</p>
+  				      <p style="width: 400px;color:blue;">住址：<span style="white-space: pre-wrap;color:black;font-weight:bold;" id="idcard-address">广东省雷州市龙门镇火炬农场40号12队宿舍40号平房</span></p>
+  			      </div>
+  			      <img src="https://avatars0.githubusercontent.com/u/20432815?v=4&s=460" width="110px" height="120px" style="margin-left:20px;" id="idcard-img"/>
+              <div style="clear: both;"></div>
+  			      <p style="color: blue;margin-left: 5px;">公民身份证号：<span style="letter-spacing: 3px;color:black;font-weight:bold;" id="idcard-number">440882199511258312</span></p>
+              <p style="color: blue;margin-left: 5px;">身份证有效期：<span style="color:black;font-weight:bold;" id="idcard-time">2012.05.07 - 2022.05.07</span></p>
+              <button id='btn-confirm-idcard' class='demo-button' style="margin-left: 30%;margin-top:30px;"> 确认扫描结果</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="demo">
+    <!-- <div class="demo">
       <div class="demo-wrapper">
         <button id="name-demo-toggle" class="js-container-target demo-toggle-button">姓名
           <div class="demo-meta u-avoid-clicks">体检人员姓名 <span class="demo-meta-divider">|</span> name</div>
@@ -31,7 +46,7 @@
           <button class="demo-button" id='btn-name' style="margin-left:15px;"> 确定</button>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="demo">
       <div class="demo-wrapper">
         <button id="camera-demo-toggle" class="js-container-target demo-toggle-button">拍照
