@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "packager": "electron-packager ./ electron-app --win --x86 --out ./OutApp --version 1.4.0 --overwrite --icon=./icon.ico"
+    "packager": "electron-packager ./ electron-app --win --x64 --out ./OutApp --version 1.4.0 --overwrite --icon=./icon.ico"
   },
   "author": "",
   "license": "ISC",
@@ -14,16 +14,11 @@
     "ansi-regex": "^3.0.0",
     "assert-plus": "^1.0.0",
     "base64-img": "^1.0.3",
-    "bindings": "^1.3.0",
     "electron-settings": "^3.1.1",
     "electron-shortcut-normalizer": "^1.0.0",
-    "ffi": "^2.2.0",
     "fs": "0.0.1-security",
     "highlight.js": "^9.12.0",
     "lowdb": "^0.16.2",
-    "node-gyp": "^3.6.2",
-    "ref": "^1.3.4",
-    "ref-array": "^1.2.0",
     "request": "^2.81.0"
   },
   "build": {

@@ -147,7 +147,7 @@ const video = document.getElementById('video'),
 
     //接收扫描身份证结果
     btn_open_idcard.addEventListener('click',()=>{
-      let url = 'http://192.168.1.112:9097/idcard_reader/info';
+      let url = 'http://localhost:9097/idcard_reader/info';
       request(url,(err,response,body)=>{
         if(err)
           alert('身份证扫描仪连接错误');

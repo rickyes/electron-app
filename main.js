@@ -2,6 +2,7 @@ const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const url = require('url')
 const config = require('./config')
+const idcard = require('./runjar/idcard')
 
 // 保持一个对于 window 对象的全局引用，如果你不这样做，
 // 当 JavaScript 对象被垃圾回收， window 会被自动地关闭
@@ -17,7 +18,8 @@ function createWindow () {
   }
   // 创建浏览器窗口。
   win = new BrowserWindow(windowOptions)
-
+  //开启外接设备jar程序
+  idcard.start();
   // 加载应用的 index.html。
   win.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
@@ -47,6 +49,8 @@ app.on('window-all-closed', () => {
   // 在 macOS 上，除非用户用 Cmd + Q 确定地退出，
   // 否则绝大部分应用及其菜单栏会保持激活。
   if (process.platform !== 'darwin') {
+    //关闭外接设备
+    idcard.stop();
     app.quit()
   }
 })

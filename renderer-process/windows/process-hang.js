@@ -4,6 +4,7 @@ const dialog = require('electron').remote.dialog
 const path = require('path')
 
 const processHangBtn = document.getElementById('process-hang')
+const input_barcode = document.getElementById('input-barcode')
 
 processHangBtn.addEventListener('click', function (event) {
   const hangWinPath = path.join('file://', __dirname, '../../sections/windows/process-hang.html')
