@@ -90,7 +90,7 @@ const video = document.getElementById('video'),
             alert(notification.body);
             const myNotification2 = new window.Notification(notification.title, notification)
             if(body.code==401){
-
+              alert('参数不全');
             }else if(body.code==200){
               idcard_name.innerText = '';
               idcard_sex.innerText = '';
@@ -198,4 +198,40 @@ const video = document.getElementById('video'),
       let parent = document.getElementById('camera-demo-toggle').parentElement;
       document.getElementById('idcard-demo-toggle').parentElement.classList.toggle('is-open');
       parent.classList.toggle('is-open');
+    });
+
+    document.getElementById('test-barcode-btn').addEventListener('click',function(){
+      let url = 'http://localhost:9097/barcode_generate/12345678';
+      request(url,(err,res,body)=>{
+        if(err){
+          alert('网络错误');
+        }else{
+          try{
+            body = JSON.parse(body);
+            if(body.result=='ok'){
+              console.log(body.info);
+              document.getElementById('test-barcode-img1').src = body.info;
+              document.getElementById('test-barcode-img2').src = body.info;
+              document.getElementById('test-barcode-img3').src = body.info;
+              setTimeout(function(){
+                var bodyHTML = window.document.body.innerHTML
+                // window.document.body.style.width = '10cm';
+                // window.document.body.style.height = '2.2cm';
+                // window.document.body.style.background = '#35b998';
+                window.document.body.innerHTML = document.getElementById('print-test').innerHTML
+                var width = window.document.body.style.width;
+                var height = window.document.body.style.height;
+                // console.log(width+'---'+height);
+                window.print()
+                window.document.body.innerHTML = bodyHTML
+                return;
+              },2000);
+            }else{
+              alert('连接错误');
+            }
+          }catch(err){
+            alert('参数错误');
+          }
+        }
+      });
     });

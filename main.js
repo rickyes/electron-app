@@ -16,6 +16,7 @@ function createWindow () {
       height: 840,
       title: app.getName()
   }
+
   // 创建浏览器窗口。
   win = new BrowserWindow(windowOptions)
   //开启外接设备jar程序

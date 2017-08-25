@@ -1,5 +1,6 @@
 const exec = require('child_process').exec;
-const cmdStr = 'cd resources/app/runjar && ';
+var cmdStr = 'cd resources/app/runjar && ';
+if(require('../config').debug) cmdStr = 'cd runjar && ';
 exports.start = function(){
   exec(cmdStr+'startup.bat',function(error, stdout, stderr){
     if (error !== null) {
