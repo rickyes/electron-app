@@ -18,8 +18,11 @@ document.onkeydown=function(){
 
 processHangBtn.addEventListener('click', function (event) {
   let val = input_barcode.value;
-  val = val == '' ? '12345678' : val;
-  console.log(val);
+  if(val === ''){
+    alert('请输入体检号');
+    return;
+  }
+  // val = val == '' ? '12345678' : val;
   let url = require('../../config.js').url+'/find?physical_number='+val;
   request(url,(err,res,body)=>{
     if(err){
@@ -29,6 +32,11 @@ processHangBtn.addEventListener('click', function (event) {
       if(body.code==401){
         alert(body.result);
       }else{
+        if(body.result.length==0){
+          alert('没有该体检号');
+          input_barcode.value = '';
+          return;
+        }
         let img_url = base_url+'/img/idcard/';
         var html = '<tr><th scope="col" abbr="Dual 1.0">姓名</th><th scope="col" abbr="Dual 1.8">身份证</th><th scope="col" abbr="Dual 1.0">性别</th><th scope="col" abbr="Dual 1.0">民族</th><th scope="col" abbr="Dual 1.0">出生</th><th scope="col" abbr="Dual 1.0">头像</th></tr>';
         for(var i=0;i<body.result.length;i++){

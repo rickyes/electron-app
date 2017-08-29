@@ -1,7 +1,7 @@
 const video = document.getElementById('video'),
         canvas = document.getElementById('canvas'),
         snap = document.getElementById('tack'),
-        img = document.getElementById('img'),
+        // img = document.getElementById('img'),
         btn_submit = document.getElementById('btn-submit'),
         // btn_idcard = document.getElementById('btn-idcard'),
         low = require('lowdb'),
@@ -58,7 +58,7 @@ const video = document.getElementById('video'),
         canvas.getContext('2d').drawImage(video, 0, 0, 400, 300);
 
         //把canvas图像转为img图片
-        img.src = canvas.toDataURL("image/png");
+        // img.src = canvas.toDataURL("image/png");
     });
 
     btn_submit.addEventListener('click',()=>{
@@ -78,7 +78,7 @@ const video = document.getElementById('video'),
           birthtime: birthtime,
           address: idcard_address.innerText,
           idcardimg: idcard_img.src,
-          img: img.src
+          img: canvas.toDataURL("image/png")
         }},function(err,res,body){
           if(err){
             notification.body = '请检查网络连接'
@@ -92,6 +92,9 @@ const video = document.getElementById('video'),
             if(body.code==401){
               alert('参数不全');
             }else if(body.code==200){
+              db.get('zfy')
+                .set('physical_number',body.physical_number)
+                .write();
               idcard_name.innerText = '';
               idcard_sex.innerText = '';
               idcard_nationality.innerText = '';
@@ -103,7 +106,7 @@ const video = document.getElementById('video'),
               idcard_number.innerText = '';
               idcard_time.innerText = '';
               camera_result_div.style.display = 'none';
-              img.src = '';
+              // img.src = '';
               canvas.height = canvas.height;
               let parent = document.getElementById('idcard-demo-toggle').parentElement;
               document.getElementById('camera-demo-toggle').parentElement.classList.toggle('is-open');
@@ -201,7 +204,8 @@ const video = document.getElementById('video'),
     });
 
     document.getElementById('test-barcode-btn').addEventListener('click',function(){
-      let url = 'http://localhost:9097/barcode_generate/12345678';
+      let physical_number = db.find({id:'1'}).value().physical_number;
+      let url = 'http://localhost:9097/barcode_generate/'+physical_number;
       request(url,(err,res,body)=>{
         if(err){
           alert('网络错误');
@@ -209,23 +213,23 @@ const video = document.getElementById('video'),
           try{
             body = JSON.parse(body);
             if(body.result=='ok'){
-              console.log(body.info);
-              document.getElementById('test-barcode-img1').src = body.info;
-              document.getElementById('test-barcode-img2').src = body.info;
-              document.getElementById('test-barcode-img3').src = body.info;
-              setTimeout(function(){
-                var bodyHTML = window.document.body.innerHTML
-                // window.document.body.style.width = '10cm';
-                // window.document.body.style.height = '2.2cm';
-                // window.document.body.style.background = '#35b998';
-                window.document.body.innerHTML = document.getElementById('print-test').innerHTML
-                var width = window.document.body.style.width;
-                var height = window.document.body.style.height;
-                // console.log(width+'---'+height);
-                window.print()
-                window.document.body.innerHTML = bodyHTML
-                return;
-              },2000);
+              alert(body.info);
+              // document.getElementById('test-barcode-img1').src = body.info;
+              // document.getElementById('test-barcode-img2').src = body.info;
+              // document.getElementById('test-barcode-img3').src = body.info;
+              // setTimeout(function(){
+              //   var bodyHTML = window.document.body.innerHTML
+              //   // window.document.body.style.width = '10cm';
+              //   // window.document.body.style.height = '2.2cm';
+              //   // window.document.body.style.background = '#35b998';
+              //   window.document.body.innerHTML = document.getElementById('print-test').innerHTML
+              //   var width = window.document.body.style.width;
+              //   var height = window.document.body.style.height;
+              //   // console.log(width+'---'+height);
+              //   window.print()
+              //   window.document.body.innerHTML = bodyHTML
+              //   return;
+              // },2000);
             }else{
               alert('连接错误');
             }
